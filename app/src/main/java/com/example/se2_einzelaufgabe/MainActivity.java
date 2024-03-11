@@ -40,12 +40,15 @@ public class MainActivity extends AppCompatActivity {
         TextView text_output = findViewById(R.id.textView);
 
         // Server verbinden
-            MyThread thread = new MyThread(text_input, text_output);
+            MyThread thread = new MyThread(text_input, text_output, 1);
             thread.start();
 
 
     }
     public void calc(View v){
-
+        EditText text_input = findViewById(R.id.text_input);
+        TextView text_output = findViewById(R.id.textView);
+        MyThread thread = new MyThread(text_input, text_output, 2);
+        thread.start();
     }
 }

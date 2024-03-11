@@ -15,14 +15,30 @@ public class MyThread extends Thread{
 
     private final EditText text_input;
     private final TextView text_output;
+    private final int method;
 
-    public MyThread(EditText text_input, TextView text_output) {
+    public MyThread(EditText text_input, TextView text_output, int method) {
         this.text_input = text_input;
         this.text_output = text_output;
+        this.method = method;
     }
 
     @Override
     public void run(){
+        switch (method){
+            case 1:
+                send();
+                break;
+            case 2:
+                calc();
+                break;
+            default:
+                Log.d("Wrong_Method", "You gave the wrong method!!!");
+                break;
+        }
+    }
+
+    private void send(){
         try {
             String input = text_input.getText().toString();
             StringBuilder builder = new StringBuilder();
@@ -45,5 +61,13 @@ public class MyThread extends Thread{
         }catch (Exception e){
             Log.d("Shit hit the fan", e.toString());
         }
+    }
+
+    private void calc(){
+        // Matrikelnummer 12212707%7=3
+        String temp = text_input.getText().toString();
+        char[] input = temp.toCharArray();
+        //
+
     }
 }
