@@ -9,7 +9,6 @@ import java.io.BufferedWriter;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.Socket;
-import java.nio.charset.StandardCharsets;
 
 public class MyThread extends Thread{
 
@@ -63,11 +62,52 @@ public class MyThread extends Thread{
         }
     }
 
-    private void calc(){
+    private void calc() {
         // Matrikelnummer 12212707%7=3
         String temp = text_input.getText().toString();
-        char[] input = temp.toCharArray();
-        //
+        if (temp.isEmpty()) {
+            text_output.setText("Die Eingabe ist leer!");
+        } else {
+            char[] input = temp.toCharArray();
+            int counter = 0;
+            char[] digits = new char[10];
+            for (int i = 0; i < 10; i++) {
+                if (i < 5) {
+                    digits[i] = (char) ((i * 2) + 48);
+                } else {
+                    digits[i] = (char) (((i - 5) * 2 + 1) + 48);
+                }
+            }
+            for (int i = 0; i < 10; i++) {
+                counter = check_next_digit(counter, input, digits[i]);
+                if (counter == -1) {
+                    break;
+                }
+            }
+            StringBuilder builder = new StringBuilder();
+            for(char digit : input){
+                builder.append(digit);
+            }
+            text_output.setText("After the calculation your Matrikelnr looks like this: " + builder.toString());
+        }
+    }
 
+    private int check_next_digit(int counter, char[] input, char digit){
+        if(counter==input.length){
+            return -1;
+        }
+        if(input[counter]==digit){
+            counter++;
+        }
+        for(int i=counter;i<input.length;i++){
+            if(input[i]==digit){
+                // swap
+                char temp = input[counter];
+                input[counter]=input[i];
+                input[i]=temp;
+                counter++;
+            }
+        }
+        return counter;
     }
 }
